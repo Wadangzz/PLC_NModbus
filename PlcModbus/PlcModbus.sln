@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcModbus", "PlcModbus\PlcModbus.csproj", "{8BF0346B-8AC7-4862-A163-994B065B6373}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{512680C2-2D56-459D-981B-6C566E9A7CCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BF0346B-8AC7-4862-A163-994B065B6373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF0346B-8AC7-4862-A163-994B065B6373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF0346B-8AC7-4862-A163-994B065B6373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF0346B-8AC7-4862-A163-994B065B6373}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "98FljJAFNKY=",
+  "success": true,
+  "projectFilePath": "E:\\PlcModbus\\PlcModbus\\PlcModbus.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\PE\\.nuget\\packages\\nmodbus\\3.0.81\\nmodbus.3.0.81.nupkg.sha512"
+  ],
+  "logs": []
+}
