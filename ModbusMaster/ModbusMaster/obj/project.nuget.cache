@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "RpItecP7A7U=",
+  "success": true,
+  "projectFilePath": "E:\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\PE\\.nuget\\packages\\nmodbus\\3.0.81\\nmodbus.3.0.81.nupkg.sha512"
+  ],
+  "logs": []
+}
