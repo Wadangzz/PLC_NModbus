@@ -20,39 +20,39 @@ namespace PlcModbus
         }
         //변수를 호출할 때는 get으로 return값을 불러오고
         //변수에 값을 넣을 땐 set으로 값을 밀어 넣음
-        public Queue<int> toPlc = new Queue<int>();
-        public Queue<int> fromPlcRegister = new Queue<int>();
-        public Queue<bool> fromPlcCoil = new Queue<bool>();
-        public Queue<bool> toPlcCoil = new Queue<bool>();
+        public Queue<int> ToPlcRegister = new Queue<int>();
+        public Queue<int> FromPlcRegister = new Queue<int>();
+        public Queue<bool> FromPlcCoil = new Queue<bool>();
+        public Queue<bool> ToPlcCoil = new Queue<bool>();
 
         public int[] deviceValues = new int[125];
-        public int[] mValues = new int[8];
+        public int[] mValues = new int[64];
         public bool[] coilValues = new bool[1024];
 
-        public Queue<int> ToPlc
+        //public Queue<int> ToPlcRegister
 
-        {
-            get { return toPlc; }
-            set { toPlc = value; }
-        }
+        //{
+        //    get { return toPlcRegister; }
+        //    set { toPlcRegister = value; }
+        //}
 
-        public Queue<int> FromPlcRegister
-        {
-            get { return fromPlcRegister; }
-            set { fromPlcRegister = value; }
-        }
+        //public Queue<int> FromPlcRegister
+        //{
+        //    get { return fromPlcRegister; }
+        //    set { fromPlcRegister = value; }
+        //}
 
-        public Queue<bool> FromPlcCoil
-        {
-            get { return fromPlcCoil; }
-            set { fromPlcCoil = value; }
-        }
+        //public Queue<bool> FromPlcCoil
+        //{
+        //    get { return fromPlcCoil; }
+        //    set { fromPlcCoil = value; }
+        //}
 
-        public Queue<bool> ToPlcCoil
-        {
-            get { return toPlcCoil; }
-            set { toPlcCoil = value; }
-        }
+        //public Queue<bool> ToPlcCoil
+        //{
+        //    get { return toPlcCoil; }
+        //    set { toPlcCoil = value; }
+        //}
 
         public void ReadData()
         {
@@ -69,20 +69,19 @@ namespace PlcModbus
                 }
             }
 
-            result = plc_data.ReadDeviceBlock("M0", 8, out mValues[0]);
+            result = plc_data.ReadDeviceBlock("M0", 64, out mValues[0]);
             if (result == 0)
             {
                 // mValues를 2진수 문자열로 변환하고, 왼쪽에 '0'을 채워 16비트로 변환.
                 //Convert.ToString(mValues, 2).PadLeft(16, '0');
 
                 // 각 비트를 bool 형식으로 변환하여 coilValues 배열에 저장.
-                for (ushort i = 0; i < 128; i++)
+                for (ushort i = 0; i < mValues.Length * 16; i++)
                 {
                     coilValues[i] = (mValues[i/16] & (1 << i%16)) != 0;
                 }
-
                 // coilValues 배열의 값을 FromPlcCoil Queue에 추가.
-                for (int i = 0; i < 128; i++)
+                for (int i = 0; i < mValues.Length * 16; i++)
                 {
                     this.FromPlcCoil.Enqueue(coilValues[i]);
                 }
@@ -92,32 +91,45 @@ namespace PlcModbus
         public void WriteData()
         {
 
-            int[] writeValues = new int[5];
-            int mValue = 0;
+            int[] writeValues = new int[1024];
+            int[] mValue = new int[64];
+            int[] deviceValue = new int[125];
+
 
             //for (int i = 0;i < 5; i++)
             //{
             //    writeValues[i] = Convert.ToInt32(this.ToPlcCoil.Dequeue());
             //    plc_data.SetDevice($"M{i + 100}", writeValues[i]);
-            //    Debug.Write($"{writeValues[i]} ");
             //}
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1024; i++)
             {
-                writeValues[i] = Convert.ToInt32(this.ToPlcCoil.Dequeue());
-                mValue += (int)Math.Pow(2, i) * writeValues[i];
-
+                if (ToPlcCoil.TryDequeue(out bool coil))
+                {
+                    writeValues[i] = Convert.ToInt32(coil);
+                }
             }
-            Debug.WriteLine(mValue);
-            int result = plc_data.WriteDeviceBlock("M80", 1, ref mValue);
-            if (result != 0)
+            for (int i = 0; i < 64; i++)
             {
-                Debug.WriteLine($"{result}");
+                for (int j = 0; j < 16; j++)
+                {
+                    mValue[i] += (int)Math.Pow(2, j) * writeValues[j + (i * 16)];
+                }
             }
+            int result = plc_data.WriteDeviceBlock("M0", 64, ref mValue[0]);
 
-            Debug.WriteLine("");
-            
+
+            for (int i = 0; i < 125; i++)
+            {
+                if (ToPlcRegister.TryDequeue(out int register))
+                {
+                    deviceValue[i] = register;
+                    //deviceValue[i] = this.ToPlcRegister.Dequeue();
+                }
+            }
+            int result2 = plc_data.WriteDeviceBlock("D0", 125, ref deviceValue[0]);
         }
     }
 }
+
 

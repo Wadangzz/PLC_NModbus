@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlcModbus")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+835a6917412b58e6b7950fad143123ee2406113d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlcModbus")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlcModbus")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

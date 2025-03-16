@@ -17,6 +17,9 @@ class Vision():
         self.indexes = [] # 겹치는 바운딩 박스 제거 후 남은 box 인덱스 list
         
         self.net = cv2.dnn.readNetFromDarknet(model_cfg, model_weights)
+        self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
+        self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_OPENCL)
+
         # 클래스 이름 파일 (coco names)
         # # List Comprehension
         with open("./darknet-master/data/coco.names", "r") as f: # 파일 열기 r = 읽기 모드
@@ -98,7 +101,7 @@ class Vision():
 vv = Vision()
 
 # 비디오 캡쳐 또는 이미지 읽기
-cap = cv2.VideoCapture("highway.mp4") # 또는 cv2.imread("image.jpg")
+cap = cv2.VideoCapture("./wadangzz/highway.mp4") # 또는 cv2.imread("image.jpg")
 fps = cap.get(cv2.CAP_PROP_FPS) # 프레임 수 구하기
 delay = int(1000/fps)
 
