@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             button1 = new Button();
-            Timer = new System.Windows.Forms.Timer(components);
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             button2 = new Button();
+            button3 = new Button();
+            button4 = new Button();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(27, 33);
+            button1.Location = new Point(31, 33);
             button1.Name = "button1";
             button1.Size = new Size(109, 65);
             button1.TabIndex = 0;
@@ -47,17 +47,12 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // Timer
-            // 
-            Timer.Enabled = true;
-            Timer.Tick += Timer_Tick;
-            // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 379);
+            statusStrip1.Location = new Point(0, 108);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(409, 22);
+            statusStrip1.Size = new Size(396, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -69,7 +64,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(142, 33);
+            button2.Location = new Point(146, 33);
             button2.Name = "button2";
             button2.Size = new Size(109, 65);
             button2.TabIndex = 2;
@@ -77,17 +72,38 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // button3
+            // 
+            button3.Location = new Point(261, 33);
+            button3.Name = "button3";
+            button3.Size = new Size(109, 32);
+            button3.TabIndex = 3;
+            button3.Text = "DataBase 생성";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(261, 66);
+            button4.Name = "button4";
+            button4.Size = new Size(109, 32);
+            button4.TabIndex = 4;
+            button4.Text = "DataBase 초기화";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(409, 401);
+            ClientSize = new Size(396, 130);
+            Controls.Add(button4);
+            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(statusStrip1);
             Controls.Add(button1);
             Name = "Form1";
             Text = "Form1";
-            Load += Form1_Load;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ResumeLayout(false);
@@ -96,9 +112,10 @@
 
         #endregion
         private Button button1;
-        private System.Windows.Forms.Timer Timer;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Button button2;
+        private Button button3;
+        private Button button4;
     }
 }

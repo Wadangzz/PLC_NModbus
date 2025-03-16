@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\PlcModbus\\PlcModbus\\PlcModbus.csproj": {}
+    "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\PlcModbus.csproj": {}
   },
   "projects": {
-    "E:\\PlcModbus\\PlcModbus\\PlcModbus.csproj": {
+    "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\PlcModbus.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\PlcModbus\\PlcModbus\\PlcModbus.csproj",
+        "projectUniqueName": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\PlcModbus.csproj",
         "projectName": "PlcModbus",
-        "projectPath": "E:\\PlcModbus\\PlcModbus\\PlcModbus.csproj",
-        "packagesPath": "C:\\Users\\PE\\.nuget\\packages\\",
-        "outputPath": "E:\\PlcModbus\\PlcModbus\\obj\\",
+        "projectPath": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\PlcModbus.csproj",
+        "packagesPath": "C:\\Users\\wadangzz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\PE\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\wadangzz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -53,6 +53,10 @@
             "NModbus": {
               "target": "Package",
               "version": "[3.0.81, )"
+            },
+            "System.Data.SQLite": {
+              "target": "Package",
+              "version": "[1.0.119, )"
             }
           },
           "imports": [
