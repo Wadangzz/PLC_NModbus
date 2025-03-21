@@ -5,6 +5,7 @@ using NModbus.Data;
 using NModbus;
 using System.Drawing.Text;
 using System.Transactions;
+using System.Text;
 
 
 namespace PlcModbus
@@ -12,12 +13,15 @@ namespace PlcModbus
     public class ModbusServer
     {
         private TcpListener tcpListener;
+        private TcpListener yoloListener;
         private ModbusFactory modbusFactory;
         private IModbusSlaveNetwork slaveNetwork;
         private IModbusSlave slave;
         private SlaveDataStore dataStore;
         private PlcData plcData;
         public bool isConnected = false;
+        public string? address = null;
+        public string? cls = null;
 
         // 각 Function Code별 저장 공간을 변수로 선언
         private IPointSource<bool> _0x01; // Coil Inputs
@@ -29,9 +33,32 @@ namespace PlcModbus
         {
             modbusFactory = new ModbusFactory();
             tcpListener = new TcpListener(IPAddress.Any, 502); // Modbus TCP 기본 포트
+            yoloListener = new TcpListener(IPAddress.Any, 6000); // YOLO TCP 포트
             slaveNetwork = modbusFactory.CreateSlaveNetwork(tcpListener);
             dataStore = new SlaveDataStore(); // 슬레이브 데이터 저장 공간
             this.plcData = _plcData; // ReadData()로 불러온 PLC 데이터가 저장된 인스턴스
+        }
+
+        private void StartYoloListener()
+        {
+            if (yoloListener == null)
+            {
+                yoloListener = new TcpListener(IPAddress.Any, 6000);
+                yoloListener.Start();
+            }
+        }
+
+        private void YoloDetect()
+        {
+            using TcpClient yoloClient = yoloListener.AcceptTcpClient();
+            using NetworkStream stream = yoloClient.GetStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            string data = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+            string[] parts = data.Split(',');
+            address = parts[0];
+            cls = parts[1];
         }
 
         public void StartModbusServer()
@@ -56,7 +83,7 @@ namespace PlcModbus
 
         public void ModbusUpdate()
         {
-            string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = C:\\Users\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
 
             if (this.isConnected)
             {

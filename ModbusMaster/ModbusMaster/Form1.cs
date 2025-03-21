@@ -5,6 +5,8 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using System.Threading;
 using NModbus.Device;
+using System.Net;
+using System.Text;
 
 namespace ModbusMaster
 {
@@ -12,8 +14,11 @@ namespace ModbusMaster
     {
 
         private static TcpClient? client;
+        private TcpListener server;
         private static IModbusMaster? modbusMaster;
         bool isConnected = false;
+        string? address = null;
+        string? cls = null;
 
         private CancellationTokenSource? tokenSource;
 
@@ -25,7 +30,32 @@ namespace ModbusMaster
         private void button1_Click(object sender, EventArgs e)
         {
             ModbusConnect(ipAddress.Text, 502);//로컬호스트 접속
+            StartTcpServer();
 
+        }
+
+        private void YoloDetect()
+        {
+            using TcpClient yoloClient = server.AcceptTcpClient();
+            using NetworkStream stream = yoloClient.GetStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            string data = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+            string[] parts = data.Split(',');
+            address = parts[0];
+            cls = parts[1];
+
+            WriteRegisters(address, cls);
+        }
+
+        private void StartTcpServer()
+        {
+            if (server == null)
+            {
+                server = new TcpListener(IPAddress.Any, 6000);
+                server.Start();
+            }
         }
 
         private async void ModbusConnect(string _ipAddress, int _port)
@@ -115,8 +145,8 @@ namespace ModbusMaster
                     {
                         modbusMaster.WriteSingleCoil(1, address, true);
                     }
-
                 }
+
                 else
                 {
                     MessageBox.Show("입력 주소를 확인하세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -179,8 +209,9 @@ namespace ModbusMaster
                 {
                     await Task.Run(() => ReadInputRegisters());
                     await Task.Run(() => ReadInputs());
+                    await Task.Run(() => YoloDetect());
                 }
-                await Task.Delay(1, token); // 10ms 인터벌
+                await Task.Delay(1, token); // 1ms 인터벌
             }
         }
 

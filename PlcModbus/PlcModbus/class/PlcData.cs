@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Windows.Forms;
@@ -28,31 +29,6 @@ namespace PlcModbus
         public int[] deviceValues = new int[125];
         public int[] mValues = new int[64];
         public bool[] coilValues = new bool[1024];
-
-        //public Queue<int> ToPlcRegister
-
-        //{
-        //    get { return toPlcRegister; }
-        //    set { toPlcRegister = value; }
-        //}
-
-        //public Queue<int> FromPlcRegister
-        //{
-        //    get { return fromPlcRegister; }
-        //    set { fromPlcRegister = value; }
-        //}
-
-        //public Queue<bool> FromPlcCoil
-        //{
-        //    get { return fromPlcCoil; }
-        //    set { fromPlcCoil = value; }
-        //}
-
-        //public Queue<bool> ToPlcCoil
-        //{
-        //    get { return toPlcCoil; }
-        //    set { toPlcCoil = value; }
-        //}
 
         public void ReadData()
         {
@@ -95,14 +71,13 @@ namespace PlcModbus
             int[] mValue = new int[64];
             int[] deviceValue = new int[125];
 
+                //for (int i = 0;i < 5; i++)
+                //{
+                //    writeValues[i] = Convert.ToInt32(this.ToPlcCoil.Dequeue());
+                //    plc_data.SetDevice($"M{i + 100}", writeValues[i]);
+                //}
 
-            //for (int i = 0;i < 5; i++)
-            //{
-            //    writeValues[i] = Convert.ToInt32(this.ToPlcCoil.Dequeue());
-            //    plc_data.SetDevice($"M{i + 100}", writeValues[i]);
-            //}
-
-            for (int i = 0; i < 1024; i++)
+                for (int i = 0; i < 1024; i++)
             {
                 if (ToPlcCoil.TryDequeue(out bool coil))
                 {
