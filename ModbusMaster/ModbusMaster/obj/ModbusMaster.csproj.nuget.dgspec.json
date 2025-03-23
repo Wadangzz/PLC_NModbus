@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj": {}
+    "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj": {
+    "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
         "projectName": "ModbusMaster",
-        "projectPath": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
-        "packagesPath": "C:\\Users\\wadangzz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\ModbusMaster\\ModbusMaster\\obj\\",
+        "projectPath": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\ModbusMaster\\ModbusMaster\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\wadangzz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -74,7 +74,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
