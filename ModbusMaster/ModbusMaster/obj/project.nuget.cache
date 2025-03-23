@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RtJcTFkU+7Y=",
+  "dgSpecHash": "0MMMzoNaT2o=",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
+  "projectFilePath": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\ModbusMaster\\ModbusMaster\\ModbusMaster.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\user\\.nuget\\packages\\nmodbus\\3.0.81\\nmodbus.3.0.81.nupkg.sha512"
+    "C:\\Users\\wadangzz\\.nuget\\packages\\nmodbus\\3.0.81\\nmodbus.3.0.81.nupkg.sha512"
   ],
   "logs": []
 }
