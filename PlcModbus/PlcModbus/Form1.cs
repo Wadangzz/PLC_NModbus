@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Xml.Linq;
 using System.Threading;
 using System.Data.SQLite;
+using System.Text;
 
 
 namespace PlcModbus
@@ -13,10 +14,12 @@ namespace PlcModbus
     {
         //delegate void TimerEventFiredDelegate();
 
+        public int writeCommand = 0;
         bool isConnected = false;
         static ActUtlType64 plc = new ActUtlType64();
         static PlcData _data = new PlcData(plc);
-        static ModbusServer modbusServer = new ModbusServer(_data);
+        static ModbusServer modbusServer = new ModbusServer(_data, plc);
+
 
         private CancellationTokenSource? tokenSource;
 
@@ -31,21 +34,20 @@ namespace PlcModbus
             InitializeComponent();
         }
 
-        // 비동기로 실행
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            plc.ActLogicalStationNumber = 1;
+
             int result = plc.Open();
             if (result == 0)
             {
                 MessageBox.Show("PLC 연결 성공", "", MessageBoxButtons.OK);
-                isConnected = true;
                 button1.BackColor = Color.AliceBlue;
 
                 modbusServer.StartModbusServer();
+                _data.YoloConnect();
+                modbusServer.writeConnect();
 
-                tokenSource = new CancellationTokenSource();
-                await StartPolling(tokenSource.Token);
+                isConnected = true;
 
                 // 멀티쓰레드로 타이머 실행
                 //readDataTimer = new System.Threading.Timer(ReadDataTimer_Tick, null, 0,1);
@@ -67,8 +69,8 @@ namespace PlcModbus
                 isConnected = false;
                 button1.BackColor = Color.White;
 
-
                 modbusServer.EndModbusServer();
+                _data.YoloDisconnect();
 
                 // 타이머 중지
                 //readDataTimer?.Change(Timeout.Infinite, Timeout.Infinite);
@@ -91,25 +93,31 @@ namespace PlcModbus
         //    }
         //}
 
+        private void CurrentTime()
+        {
+            toolStripStatusLabel1.Text = DateTime.Now.ToString();
+        }
+
         private async Task StartPolling(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
             {
-                toolStripStatusLabel1.Text = DateTime.Now.ToString();
+                await Task.Run(() => CurrentTime());
                 if (isConnected)
                 {
                     await Task.Run(() => _data.ReadData());
+                    await Task.Run(() => _data.YoloDetect());
                     await Task.Run(() => modbusServer.ModbusUpdate());
-                    await Task.Run(() => _data.WriteData());
+                    await Task.Run(() => modbusServer.WriteCommand());
                 }
-                await Task.Delay(1, token); // 10ms 인터벌
+                await Task.Delay(1, token);
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
 
-            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
                 conn.Open();
@@ -153,7 +161,7 @@ namespace PlcModbus
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
                 conn.Open();
@@ -170,29 +178,37 @@ namespace PlcModbus
             }
         }
 
-        //private void ReadDataTimer_Tick(object? garbage)
-        //{
-        //    if (isConnected)
-        //    {
-        //        this.BeginInvoke(new TimerEventFiredDelegate(_data.ReadData));
-        //    }
-        //}
-
-
-        //private void ModbusUpdateTimer_Tick(object? garbage)
-        //{
-        //    if (isConnected)
-        //    {
-        //        this.BeginInvoke(new TimerEventFiredDelegate(modbusServer.ModbusUpdate));
-        //    }
-        //}
-
-        //private void WriteDataTimer_Tick(object? garbage)
-        //{
-        //    if (isConnected)
-        //    {
-        //        this.BeginInvoke(new TimerEventFiredDelegate(_data.WriteData));
-        //    }
-        //}
+        private async void Form1_Load(object sender, EventArgs e)
+        {
+            tokenSource = new CancellationTokenSource();
+            await StartPolling(tokenSource.Token);
+        }
     }
 }
+
+    //private void ReadDataTimer_Tick(object? garbage)
+    //{
+    //    if (isConnected)
+    //    {
+    //        this.BeginInvoke(new TimerEventFiredDelegate(_data.ReadData));
+    //    }
+    //}
+
+
+    //private void ModbusUpdateTimer_Tick(object? garbage)
+    //{
+    //    if (isConnected)
+    //    {
+    //        this.BeginInvoke(new TimerEventFiredDelegate(modbusServer.ModbusUpdate));
+    //    }
+    //}
+
+    //private void WriteDataTimer_Tick(object? garbage)
+    //{
+    //    if (isConnected)
+    //    {
+    //        this.BeginInvoke(new TimerEventFiredDelegate(_data.WriteData));
+    //    }
+    //}
+
+

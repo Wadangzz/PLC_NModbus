@@ -1,25 +1,25 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\",
+  "WorkspaceRootPath": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\user\\documents\\github\\wadangzz\\plcmodbus\\plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\user\\documents\\github\\wadangzz\\plcmodbus\\plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\wadangzz\\desktop\\wadangzz\\wadangzz\\plcmodbus\\plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\user\\documents\\github\\wadangzz\\plcmodbus\\plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\wadangzz\\desktop\\wadangzz\\wadangzz\\plcmodbus\\plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\wadangzz\\desktop\\wadangzz\\wadangzz\\plcmodbus\\plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\user\\documents\\github\\wadangzz\\plcmodbus\\plcmodbus\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|c:\\users\\wadangzz\\desktop\\wadangzz\\wadangzz\\plcmodbus\\plcmodbus\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -30,69 +30,83 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs",
-              "RelativeDocumentMoniker": "PlcModbus\\Form1.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs",
-              "RelativeToolTip": "PlcModbus\\Form1.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACMAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-31T16:03:19.346Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PlcData.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
-              "RelativeDocumentMoniker": "PlcModbus\\class\\PlcData.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
-              "RelativeToolTip": "PlcModbus\\class\\PlcData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA0AAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "PlcModbus\\Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\Form1.Designer.cs",
+              "RelativeToolTip": "PlcModbus\\Form1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-29T09:33:19.176Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ModbusServer.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
-              "RelativeDocumentMoniker": "PlcModbus\\class\\ModbusServer.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
-              "RelativeToolTip": "PlcModbus\\class\\ModbusServer.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAAwDwAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:57:05.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-22T09:00:13.001Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Form1.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs",
               "RelativeDocumentMoniker": "PlcModbus\\Form1.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs [\uB514\uC790\uC778]",
+              "ToolTip": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "PlcModbus\\Form1.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-26T03:00:18.049Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Form1.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\Form1.Designer.cs",
-              "RelativeDocumentMoniker": "PlcModbus\\Form1.Designer.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\PlcModbus\\Form1.Designer.cs",
-              "RelativeToolTip": "PlcModbus\\Form1.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAkAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs",
+              "RelativeDocumentMoniker": "PlcModbus\\Form1.cs",
+              "ToolTip": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\Form1.cs",
+              "RelativeToolTip": "PlcModbus\\Form1.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAIwEkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T02:14:19.743Z"
+              "WhenOpened": "2025-01-31T16:03:19.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlcData.cs",
+              "DocumentMoniker": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
+              "RelativeDocumentMoniker": "PlcModbus\\class\\PlcData.cs",
+              "ToolTip": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
+              "RelativeToolTip": "PlcModbus\\class\\PlcData.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAawHMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-29T09:33:19.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ModbusServer.cs",
+              "DocumentMoniker": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
+              "RelativeDocumentMoniker": "PlcModbus\\class\\ModbusServer.cs",
+              "ToolTip": "C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
+              "RelativeToolTip": "PlcModbus\\class\\ModbusServer.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAD4v0UAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T03:57:05.46Z",
+              "EditorCaption": ""
             }
           ]
         }

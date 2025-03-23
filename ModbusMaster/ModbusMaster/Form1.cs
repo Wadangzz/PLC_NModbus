@@ -5,20 +5,19 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using System.Threading;
 using NModbus.Device;
-using System.Net;
 using System.Text;
+using System.Net;
 
 namespace ModbusMaster
 {
     public partial class Form1 : Form
     {
 
-        private static TcpClient? client;
-        private TcpListener server;
-        private static IModbusMaster? modbusMaster;
+        private TcpClient? client;
+        private IModbusMaster? modbusMaster;
+        ushort[] registers = new ushort[123];
+        bool[] coils = new bool[1024];
         bool isConnected = false;
-        string? address = null;
-        string? cls = null;
 
         private CancellationTokenSource? tokenSource;
 
@@ -30,32 +29,6 @@ namespace ModbusMaster
         private void button1_Click(object sender, EventArgs e)
         {
             ModbusConnect(ipAddress.Text, 502);//로컬호스트 접속
-            StartTcpServer();
-
-        }
-
-        private void YoloDetect()
-        {
-            using TcpClient yoloClient = server.AcceptTcpClient();
-            using NetworkStream stream = yoloClient.GetStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead = stream.Read(buffer, 0, buffer.Length);
-            string data = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
-            string[] parts = data.Split(',');
-            address = parts[0];
-            cls = parts[1];
-
-            WriteRegisters(address, cls);
-        }
-
-        private void StartTcpServer()
-        {
-            if (server == null)
-            {
-                server = new TcpListener(IPAddress.Any, 6000);
-                server.Start();
-            }
         }
 
         private async void ModbusConnect(string _ipAddress, int _port)
@@ -68,7 +41,7 @@ namespace ModbusMaster
                 if (isConnected)
                 {
                     MessageBox.Show("서버에 접속했습니다.", "Success", MessageBoxButtons.OK);
-                    var factory = new ModbusFactory();
+                    ModbusFactory factory = new ModbusFactory();
                     modbusMaster = factory.CreateMaster(client);
 
                     tokenSource = new CancellationTokenSource();
@@ -102,32 +75,60 @@ namespace ModbusMaster
             }
         }
 
+        public async void SendCommand(string dataType)
+        {
+            try
+            {
+                using TcpClient writeClient = new TcpClient();
+                await writeClient.ConnectAsync("127.0.0.1", 6001);
+
+                using NetworkStream stream = writeClient.GetStream();
+                string message = dataType; // 문자열 "1" 전송
+                byte[] data = Encoding.ASCII.GetBytes(message);
+                await stream.WriteAsync(data, 0, data.Length);
+                Debug.WriteLine("String dataType sent to server.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
         private void ReadInputRegisters()
         {
-            if (modbusMaster != null)
+            try
             {
-                ushort startAddress = 0;
-                ushort numRegisters = 125;//최대 125워드 주고 받기
-                ushort[] registers = modbusMaster.ReadInputRegisters(1, startAddress, numRegisters);
+                if (modbusMaster != null)
+                {
+                    ushort startAddress = 0;
+                    ushort numRegisters = 123;//최대 123워드 주고 받기
+                    registers = modbusMaster.ReadInputRegisters(1, startAddress, numRegisters);
 
-                //Debug.Log($"Coils: {string.Join(", ", registers)}");
+                    //Debug.WriteLine($"Registers: {string.Join(", ", registers)}");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
         }
 
         private void ReadInputs()
         {
-            if (modbusMaster != null)
+            try
             {
-                bool[] coils = new bool[1024];
-                ushort startAddress = 0;
-                ushort numCoils = 1024;//코일 갯수
-                coils = modbusMaster.ReadInputs(1, startAddress, numCoils);
+                if (modbusMaster != null)
+                {
+                    ushort startAddress = 0;
+                    ushort numCoils = 1024;//코일 갯수
+                    coils = modbusMaster.ReadInputs(1, startAddress, numCoils);
+                    //Debug.WriteLine($"Coils: {string.Join(", ", coils)}");
 
-                //for (int i = 0; i < 5; i++)
-                //{
-                //    Debug.Write($"M{i} : {coils[i]} ");
-                //}
-                //Debug.WriteLine("");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
         }
 
@@ -139,14 +140,18 @@ namespace ModbusMaster
                 {
                     if (_writeValue[address])
                     {
-                        modbusMaster.WriteSingleCoil(1, address, false);
+                        //modbusMaster.WriteSingleCoil(1, address, false);
+                        coils[address] = false;
                     }
                     else
                     {
-                        modbusMaster.WriteSingleCoil(1, address, true);
+                        //modbusMaster.WriteSingleCoil(1, address, true);
+                        coils[address] = true;
                     }
+                    modbusMaster.WriteMultipleCoils(1, 0, coils);
+                    bool[] coil = modbusMaster.ReadCoils(1, 0, 123);
+                    Debug.WriteLine($"Coils: {string.Join(", ", coil)}");
                 }
-
                 else
                 {
                     MessageBox.Show("입력 주소를 확인하세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -156,23 +161,34 @@ namespace ModbusMaster
 
         private void WriteRegisters(string _address, string _value)
         {
-            if (modbusMaster != null)
+            try
             {
-                if ((ushort.TryParse(_address, out ushort address)) & (ushort.TryParse(_value, out ushort value)))
+                if (modbusMaster != null)
                 {
-                    modbusMaster.WriteSingleRegister(1, address, value);
-                }
-                else
-                {
-                    MessageBox.Show("입력 주소와 데이터를 확인하세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if ((ushort.TryParse(_address, out ushort address)) & (ushort.TryParse(_value, out ushort value)))
+                    {
+                        registers[address] = value;
+                        modbusMaster.WriteMultipleRegisters(1, 0, registers);
+                        //modbusMaster.WriteSingleRegister(1, address, value);
+                        ushort[] register = modbusMaster.ReadHoldingRegisters(1, 0, 123);
+                        Debug.WriteLine($"Registers: {string.Join(", ", register)}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("입력 주소와 데이터를 확인하세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
-
 
         private void btnWrite_Click(object sender, EventArgs e)
         {
             string address = WriteAddress.Text;
+            int idx = int.Parse(address);
             if (modbusMaster != null)
             {
                 ushort startAddress = 0;
@@ -180,6 +196,8 @@ namespace ModbusMaster
                 bool[] writeValue = modbusMaster.ReadCoils(1, startAddress, numCoils);
 
                 WriteCoils(address, writeValue);
+                SendCommand("M");
+                lbx_Log.Items.Add($"{DateTime.Now.ToString()}   Write   Address : M{idx}      Data : {coils[idx]}");
             }
         }
 
@@ -190,17 +208,17 @@ namespace ModbusMaster
 
         private void btnWriteDevice_Click(object sender, EventArgs e)
         {
-            WriteRegisters(whiteDevice.Text, data.Text);
+            string address = WriteAddress.Text;
+            string value = data.Text;
+            int idx = int.Parse(address);
+            if (modbusMaster != null)
+            {
+                WriteRegisters(address, value);
+                SendCommand("D");
+                lbx_Log.Items.Add($"{DateTime.Now.ToString()}   Write   Address : D{idx}      Data : {registers[idx]}");
+            }
         }
 
-        //private void timer1_Tick(object sender, EventArgs e)
-        //{
-        //    if (isConnected)
-        //    {
-        //        ReadInputRegisters();
-        //        ReadInputs();
-        //    }
-        //}
         private async Task StartPolling(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
@@ -209,7 +227,6 @@ namespace ModbusMaster
                 {
                     await Task.Run(() => ReadInputRegisters());
                     await Task.Run(() => ReadInputs());
-                    await Task.Run(() => YoloDetect());
                 }
                 await Task.Delay(1, token); // 1ms 인터벌
             }
@@ -217,7 +234,14 @@ namespace ModbusMaster
 
         private void btnRead_Click(object sender, EventArgs e)
         {
+            int address = int.Parse(readAddress.Text);
+            lbx_Log.Items.Add($"{DateTime.Now.ToString()}   Read   Address : M{address}      Data : {coils[address]}");
+        }
 
+        private void btnReadDevice_Click(object sender, EventArgs e)
+        {
+            int address = int.Parse(readDevice.Text);
+            lbx_Log.Items.Add($"{DateTime.Now.ToString()}   Read   Address : D{address}      Data : {registers[address]}");
         }
     }
 }

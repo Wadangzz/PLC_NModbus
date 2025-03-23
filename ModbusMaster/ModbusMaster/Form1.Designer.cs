@@ -222,6 +222,7 @@
             btnReadDevice.TabIndex = 12;
             btnReadDevice.Text = "입력";
             btnReadDevice.UseVisualStyleBackColor = true;
+            btnReadDevice.Click += btnReadDevice_Click;
             // 
             // label7
             // 
