@@ -80,7 +80,7 @@ namespace ModbusMaster
             try
             {
                 using TcpClient writeClient = new TcpClient();
-                await writeClient.ConnectAsync("127.0.0.1", 6001);
+                await writeClient.ConnectAsync(ipAddress.Text, 6001);
 
                 using NetworkStream stream = writeClient.GetStream();
                 string message = dataType; // 문자열 "1" 전송
@@ -208,7 +208,7 @@ namespace ModbusMaster
 
         private void btnWriteDevice_Click(object sender, EventArgs e)
         {
-            string address = WriteAddress.Text;
+            string address = whiteDevice.Text;
             string value = data.Text;
             int idx = int.Parse(address);
             if (modbusMaster != null)

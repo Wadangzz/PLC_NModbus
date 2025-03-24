@@ -87,7 +87,7 @@ namespace PlcModbus
         }
         public void ModbusUpdate()
         {
-            string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
 
             if (this.isConnected)
             {

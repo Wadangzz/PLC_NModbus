@@ -37,6 +37,7 @@ namespace PlcModbus
         private void button1_Click(object sender, EventArgs e)
         {
 
+            plc.ActLogicalStationNumber = 0;
             int result = plc.Open();
             if (result == 0)
             {
@@ -117,7 +118,7 @@ namespace PlcModbus
         private void button3_Click(object sender, EventArgs e)
         {
 
-            string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
                 conn.Open();
