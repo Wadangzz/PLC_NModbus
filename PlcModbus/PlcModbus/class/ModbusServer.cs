@@ -5,8 +5,8 @@ using NModbus.Data;
 using NModbus;
 using System.Diagnostics;
 using System.Text;
-using NModbus.Device;
 using ActUtlType64Lib;
+
 
 namespace PlcModbus
 {
@@ -15,6 +15,7 @@ namespace PlcModbus
         ActUtlType64 plc = new ActUtlType64();
         private TcpListener tcpListener;
         private TcpListener writeListener;
+        private TcpListener robotListener;
         private ModbusFactory modbusFactory;
         private IModbusSlaveNetwork slaveNetwork;
         private IModbusSlave slave;
@@ -23,6 +24,8 @@ namespace PlcModbus
         private Form1 form;
         public bool isConnected = false;
         public string writeCommand;
+
+        public ushort[] robotAxis = new ushort[24]; // 로봇 축 데이터 저장 배열
 
         // 각 Function Code별 저장 공간을 변수로 선언
         private IPointSource<bool> _0x01; // Coil Inputs
@@ -33,7 +36,7 @@ namespace PlcModbus
         public ModbusServer(PlcData _plcData, ActUtlType64 _plc)
         {
             modbusFactory = new ModbusFactory();
-            tcpListener = new TcpListener(IPAddress.Any, 502); // Modbus TCP 기본 포트
+            tcpListener = new TcpListener(IPAddress.Any, 1502); // Modbus TCP 기본 포트
             slaveNetwork = modbusFactory.CreateSlaveNetwork(tcpListener);
             dataStore = new SlaveDataStore(); // 슬레이브 데이터 저장 공간
             this.plcData = _plcData; // ReadData()로 불러온 PLC 데이터가 저장된 인스턴스
@@ -60,21 +63,40 @@ namespace PlcModbus
             this.isConnected = false;
             MessageBox.Show("Modbus TCP 서버 종료", "정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         public void writeConnect()
         {
             writeListener = new TcpListener(IPAddress.Any, 6001);
             writeListener.Start();
         }
-        public async void WriteCommand()
+
+        public void RobotListen() // Dobot 축 각도 수신
+        {
+            robotListener = new TcpListener(IPAddress.Any, 8000);
+            robotListener.Start();
+            MessageBox.Show("RobotAxis 수신", "정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public async void WriteCommand() // 6001번 포트로 쓰기 요청 수신
         {
             try
             {
-                using TcpClient writeClient = await writeListener.AcceptTcpClientAsync();
-                using NetworkStream stream = writeClient.GetStream();
-                byte[] buffer = new byte[1024];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                writeCommand = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                Debug.WriteLine($"WriteCommand: {writeCommand}");
+                await Task.Run(async () =>
+                {
+                    using TcpClient writeClient = await writeListener.AcceptTcpClientAsync();
+                    using NetworkStream stream = writeClient.GetStream();
+                    byte[] buffer = new byte[1024];
+                    while (true)
+                    {
+                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                        if (bytesRead == 0)
+                        {
+                            break;
+                        }
+                        writeCommand = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        Debug.WriteLine($"WriteCommand: {writeCommand}");
+                    }
+                });
             }
             catch (SocketException ex)
             {
@@ -85,6 +107,88 @@ namespace PlcModbus
                 Debug.WriteLine(e.Message);
             }
         }
+        public ushort[] FloatToRegisters(float value) // 4byte float를 2byte unsigned short로 변환
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            return new ushort[] {
+                BitConverter.ToUInt16(bytes, 0),
+                BitConverter.ToUInt16(bytes, 2)
+            };
+        }
+        public async void RobotAxis() // 로봇 축 데이터 수신 후 해당 id에 맞는 축에 저장
+        {
+            try
+            {
+                await Task.Run(async () =>
+                {
+                    using TcpClient robotClient = await robotListener.AcceptTcpClientAsync();
+                    using NetworkStream stream = robotClient.GetStream();
+                    byte[] buffer = new byte[17];
+                    while (true)
+                    {
+                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                        if (bytesRead == 0)
+                        {
+                            break;
+                        }
+                        if (bytesRead == 17)
+                        {
+                            byte id = buffer[0];
+                            float j1 = BitConverter.ToSingle(buffer, 1);
+                            float j2 = BitConverter.ToSingle(buffer, 5);
+                            float j3 = BitConverter.ToSingle(buffer, 9);
+                            float j4 = BitConverter.ToSingle(buffer, 13);
+
+                            ushort[] reg_j1 = FloatToRegisters(j1);
+                            ushort[] reg_j2 = FloatToRegisters(j2);
+                            ushort[] reg_j3 = FloatToRegisters(j3);
+                            ushort[] reg_j4 = FloatToRegisters(j4);
+
+                            if (id == 1)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    robotAxis[i] = reg_j1[i];
+                                    robotAxis[i + 2] = reg_j2[i];
+                                    robotAxis[i + 4] = reg_j3[i];
+                                    robotAxis[i + 6] = reg_j4[i];
+                                }
+                            }
+                            else if (id == 2)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    robotAxis[i + 8] = reg_j1[i];
+                                    robotAxis[i + 10] = reg_j2[i];
+                                    robotAxis[i + 12] = reg_j3[i];
+                                    robotAxis[i + 14] = reg_j4[i];
+                                }
+                            }
+                            else if (id == 3)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    robotAxis[i + 16] = reg_j1[i];
+                                    robotAxis[i + 18] = reg_j2[i];
+                                    robotAxis[i + 20] = reg_j3[i];
+                                    robotAxis[i + 22] = reg_j4[i];
+                                }
+                            }
+                            Debug.WriteLine($"[ID {id}] J1={j1}, J2={j2}, J3={j3}, J4={j4}");
+                        }
+                    }
+                });
+            }
+            catch (SocketException ex)
+            {
+                Debug.WriteLine($"SocketException: {ex.Message}");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
         public void ModbusUpdate()
         {
             string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
@@ -100,15 +204,21 @@ namespace PlcModbus
                 ushort regAddress = 0;
                 ushort coilAddress = 0;
 
-                // InputRegisters 업데이트
+                // plc값 InputRegisters 업데이트
                 while (plcData.FromPlcRegister.Count > 0)
                 {
                     ushort reg = (ushort)plcData.FromPlcRegister.Dequeue();
                     _0x03.WritePoints(regAddress, new ushort[] { reg });
                     regAddress++;
                 }
+                
+                //로봇 각도 InputRegisters 업데이터(100~123)
+                for (int i = 0; i < 24; i++)
+                {
+                    _0x03.WritePoints((ushort)(i+100), new ushort[] { robotAxis[i] });
+                }
 
-                // CoilInputs 업데이트
+                // plc값 CoilInputs 업데이트
                 while (plcData.FromPlcCoil.Count > 0)
                 {
                     bool coil = plcData.FromPlcCoil.Dequeue();
@@ -149,14 +259,14 @@ namespace PlcModbus
                 else if (writeCommand == "D")
                 { 
                     // HoldingRegisters 읽기
-                    for (ushort i = 0; i < 123; i++)
+                    for (ushort i = 0; i < 125; i++)
                     {
                         plcData.ToPlcRegister.Enqueue(_0x04.ReadPoints(i, 1)[0]);
                     }
 
-                    int[] deviceValue = new int[123];
+                    int[] deviceValue = new int[125];
 
-                    for (int i = 0; i < 123; i++)
+                    for (int i = 0; i < 125; i++)
                     {
                         if (plcData.ToPlcRegister.TryDequeue(out int register))
                         {
@@ -164,7 +274,7 @@ namespace PlcModbus
                             //deviceValue[i] = this.ToPlcRegister.Dequeue();
                         }
                     }
-                    int result2 = plc.WriteDeviceBlock("D0", 123, ref deviceValue[0]);
+                    int result2 = plc.WriteDeviceBlock("D0", 125, ref deviceValue[0]);
                     Debug.WriteLine("D 데이터 쓰기 완료");
                     writeCommand = "마스터 쓰기 요청 대기";
                 }
@@ -188,7 +298,7 @@ namespace PlcModbus
                         }
 
                         // 아날로그 태그 저장
-                        for (ushort i = 0; i < 123; i++)
+                        for (ushort i = 0; i < 125; i++)
                         {
                             ushort reg = _0x03.ReadPoints(i, 1)[0];
                             cmd.CommandText =

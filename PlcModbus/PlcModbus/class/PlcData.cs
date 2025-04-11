@@ -15,6 +15,7 @@ namespace PlcModbus
 
         ActUtlType64 plc_data = new ActUtlType64();
         TcpListener yoloListener;
+        NetworkStream stream;
 
 
         //Form1에서 호출한 actUtlType 인스턴스 정보(ex: PLC 접속 정보)를 그대로 이용하므로
@@ -32,54 +33,18 @@ namespace PlcModbus
         public int[] deviceValues = new int[125];
         public int[] mValues = new int[64];
         public bool[] coilValues = new bool[1024];
-
-        public void YoloConnect()
-        {
-            yoloListener = new TcpListener(IPAddress.Any, 6000);
-            yoloListener.Start();
-            MessageBox.Show("Yolo Detect 시작", "information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        public void YoloDisconnect()
-        {
-            yoloListener.Stop(); // TCP 소켓 Close
-            MessageBox.Show("Yolo Detect 종료", "information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        public async void YoloDetect()
-        {
-            try
-            {
-                using TcpClient yoloClient = await yoloListener.AcceptTcpClientAsync();
-                using NetworkStream stream = yoloClient.GetStream();
-                byte[] buffer = new byte[1024];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                string data = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                string[]? parts = data.Split(',');
-                int address = int.Parse(parts[0]);
-                int cls = int.Parse(parts[1]);
-                plc_data.SetDevice($"D{address}", cls);
-            }
-            catch (SocketException ex)
-            {
-                Debug.WriteLine($"SocketException: {ex.Message}");
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
+        byte[] buffer = new byte[1024];
 
         public void ReadData()
         {
 
             //PLC에서 3번 Function Code 최대 개수 만큼 D0에서 불러옮
-            int result = plc_data.ReadDeviceBlock("D0", 125, out deviceValues[0]);
+            int result = plc_data.ReadDeviceBlock("D0", 100, out deviceValues[0]);
             if (result == 0)
             {
                 //Debug.WriteLine($"deviceValues[{0}] = {deviceValues[0]}");
                 // deviceValues 배열의 값을 FromPlcRegister Queue에 추가.
-                for (int i = 0; i < 125 ; i++)
+                for (int i = 0; i < 100 ; i++)
                 {
                     this.FromPlcRegister.Enqueue(deviceValues[i]);
                 }
@@ -103,7 +68,6 @@ namespace PlcModbus
                 }
             }
         }
-
 
         //마스터에서 쓰기요청이 올 때만 쓰려고 ModbusServer 클래스로 이전
 

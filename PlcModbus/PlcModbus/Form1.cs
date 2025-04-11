@@ -24,11 +24,6 @@ namespace PlcModbus
         private CancellationTokenSource? tokenSource;
 
 
-        //private System.Threading.Timer readDataTimer = null!;
-        //private System.Threading.Timer modbusUpdateTimer = null!;
-        //private System.Threading.Timer writeDataTimer = null!;
-
-
         public Form1()
         {
             InitializeComponent();
@@ -37,7 +32,7 @@ namespace PlcModbus
         private void button1_Click(object sender, EventArgs e)
         {
 
-            plc.ActLogicalStationNumber = 0;
+            plc.ActLogicalStationNumber = 4;
             int result = plc.Open();
             if (result == 0)
             {
@@ -45,15 +40,10 @@ namespace PlcModbus
                 button1.BackColor = Color.AliceBlue;
 
                 modbusServer.StartModbusServer();
-                _data.YoloConnect();
                 modbusServer.writeConnect();
+                modbusServer.RobotListen();
 
                 isConnected = true;
-
-                // 멀티쓰레드로 타이머 실행
-                //readDataTimer = new System.Threading.Timer(ReadDataTimer_Tick, null, 0,1);
-                //modbusUpdateTimer = new System.Threading.Timer(ModbusUpdateTimer_Tick, null, 0,1);
-                //writeDataTimer = new System.Threading.Timer(WriteDataTimer_Tick, null, 0,1);
             }
             else
             {
@@ -71,28 +61,12 @@ namespace PlcModbus
                 button1.BackColor = Color.White;
 
                 modbusServer.EndModbusServer();
-                _data.YoloDisconnect();
-
-                // 타이머 중지
-                //readDataTimer?.Change(Timeout.Infinite, Timeout.Infinite);
-                //modbusUpdateTimer?.Change(Timeout.Infinite, Timeout.Infinite);
-                //writeDataTimer?.Change(Timeout.Infinite, Timeout.Infinite);
             }
             else
             {
                 MessageBox.Show($"PLC 연결 해제 실패\n 에러코드 {result}", "", MessageBoxButtons.OK);
             }
         }
-
-        //private void timer1_Tick(object sender, EventArgs e)
-        //{
-        //    if (isConnected)
-        //    {
-        //        _data.ReadData();
-        //        modbusServer.ModbusUpdate();
-        //        _data.WriteData();
-        //    }
-        //}
 
         private void CurrentTime()
         {
@@ -107,9 +81,9 @@ namespace PlcModbus
                 if (isConnected)
                 {
                     await Task.Run(() => _data.ReadData());
-                    await Task.Run(() => _data.YoloDetect());
                     await Task.Run(() => modbusServer.ModbusUpdate());
                     await Task.Run(() => modbusServer.WriteCommand());
+                    await Task.Run(() => modbusServer.RobotAxis());
                 }
                 await Task.Delay(1, token);
             }
@@ -165,6 +139,7 @@ namespace PlcModbus
             string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
+                
                 conn.Open();
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
                 using (SQLiteCommand cmd = new SQLiteCommand(conn))
@@ -186,30 +161,3 @@ namespace PlcModbus
         }
     }
 }
-
-    //private void ReadDataTimer_Tick(object? garbage)
-    //{
-    //    if (isConnected)
-    //    {
-    //        this.BeginInvoke(new TimerEventFiredDelegate(_data.ReadData));
-    //    }
-    //}
-
-
-    //private void ModbusUpdateTimer_Tick(object? garbage)
-    //{
-    //    if (isConnected)
-    //    {
-    //        this.BeginInvoke(new TimerEventFiredDelegate(modbusServer.ModbusUpdate));
-    //    }
-    //}
-
-    //private void WriteDataTimer_Tick(object? garbage)
-    //{
-    //    if (isConnected)
-    //    {
-    //        this.BeginInvoke(new TimerEventFiredDelegate(_data.WriteData));
-    //    }
-    //}
-
-

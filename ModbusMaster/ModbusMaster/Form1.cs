@@ -28,7 +28,7 @@ namespace ModbusMaster
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ModbusConnect(ipAddress.Text, 502);//로컬호스트 접속
+            ModbusConnect(ipAddress.Text, 1502);//로컬호스트 접속
         }
 
         private async void ModbusConnect(string _ipAddress, int _port)
