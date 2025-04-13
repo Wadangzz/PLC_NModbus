@@ -1,6 +1,4 @@
 ## Hi there 👋
-
-로봇 활용 첨단 생산시스템 개 빡세넹
 <!--
 **Wadangzz/wadangzz** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
