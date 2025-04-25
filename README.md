@@ -20,7 +20,7 @@ PLC, 로봇, 센서, 비전, 그리고 그것들을 하나로 묶어주는 통�
 
 ### 🔌 API / Library
 ![Dobot SDK](https://img.shields.io/badge/Dobot_SDK-0082C8?style=flat&logo=usb&logoColor=white)
-![YOLO](https://img.shields.io/badge/YOLOv5-7B68EE?style=flat&logo=opencv&logoColor=white)
+![YOLO](https://img.shields.io/badge/YOLO-7B68EE?style=flat&logo=opencv&logoColor=white)
 ![MediaPipe](https://img.shields.io/badge/MediaPipe-FF6F00?style=flat&logo=google&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat&logo=OpenCV&logoColor=white)
 ![MX Component](https://img.shields.io/badge/MX_Component-000000?style=flat&logo=windows&logoColor=white)
