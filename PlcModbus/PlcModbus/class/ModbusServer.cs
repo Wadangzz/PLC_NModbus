@@ -64,13 +64,14 @@ namespace PlcModbus
             MessageBox.Show("Modbus TCP 서버 종료", "정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void writeConnect()
+        //ModbusMaster에서 쓰기 명령 수신 대기하는 소켓 생성(왠지 모르겠는데 Modbus Socket으로 GerStream이 안돼서 PORT 따로 뺌)
+        public void writeConnect() 
         {
             writeListener = new TcpListener(IPAddress.Any, 6001);
             writeListener.Start();
         }
-
-        public void RobotListen() // Dobot 축 각도 수신
+        // Dobot 축 각도 수신
+        public void RobotListen()
         {
             robotListener = new TcpListener(IPAddress.Any, 8000);
             robotListener.Start();
@@ -259,14 +260,14 @@ namespace PlcModbus
                 else if (writeCommand == "D")
                 { 
                     // HoldingRegisters 읽기
-                    for (ushort i = 0; i < 125; i++)
+                    for (ushort i = 0; i < 100; i++)
                     {
                         plcData.ToPlcRegister.Enqueue(_0x04.ReadPoints(i, 1)[0]);
                     }
 
-                    int[] deviceValue = new int[125];
+                    int[] deviceValue = new int[100];
 
-                    for (int i = 0; i < 125; i++)
+                    for (int i = 0; i < 100; i++)
                     {
                         if (plcData.ToPlcRegister.TryDequeue(out int register))
                         {
@@ -274,43 +275,43 @@ namespace PlcModbus
                             //deviceValue[i] = this.ToPlcRegister.Dequeue();
                         }
                     }
-                    int result2 = plc.WriteDeviceBlock("D0", 125, ref deviceValue[0]);
+                    int result2 = plc.WriteDeviceBlock("D0", 100, ref deviceValue[0]);
                     Debug.WriteLine("D 데이터 쓰기 완료");
                     writeCommand = "마스터 쓰기 요청 대기";
                 }
 
-                using SQLiteConnection conn = new SQLiteConnection(strConn);
-                {
-                    conn.Open();
-                    using (SQLiteTransaction transaction = conn.BeginTransaction())
-                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
-                    {
-                        // 디지털 태그 업데이트
-                        for (ushort i = 0; i < 1024; i++)
-                        {
-                            bool value = _0x01.ReadPoints(i, 1)[0];
-                            cmd.CommandText =
-                            "UPDATE DigitalTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
-                            cmd.Parameters.AddWithValue("@addr", $"M{i}");
-                            cmd.Parameters.AddWithValue("@val", value ? 1 : 0);
-                            cmd.ExecuteNonQuery();
-                            cmd.Parameters.Clear();
-                        }
+                //using SQLiteConnection conn = new SQLiteConnection(strConn);
+                //{
+                //    conn.Open();
+                //    using (SQLiteTransaction transaction = conn.BeginTransaction())
+                //    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                //    {
+                //        // 디지털 태그 업데이트
+                //        for (ushort i = 0; i < 1024; i++)
+                //        {
+                //            bool value = _0x01.ReadPoints(i, 1)[0];
+                //            cmd.CommandText =
+                //            "UPDATE DigitalTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
+                //            cmd.Parameters.AddWithValue("@addr", $"M{i}");
+                //            cmd.Parameters.AddWithValue("@val", value ? 1 : 0);
+                //            cmd.ExecuteNonQuery();
+                //            cmd.Parameters.Clear();
+                //        }
 
-                        // 아날로그 태그 저장
-                        for (ushort i = 0; i < 125; i++)
-                        {
-                            ushort reg = _0x03.ReadPoints(i, 1)[0];
-                            cmd.CommandText =
-                            "UPDATE AnalogTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
-                            cmd.Parameters.AddWithValue("@addr", $"D{i}");
-                            cmd.Parameters.AddWithValue("@val", reg);
-                            cmd.ExecuteNonQuery();
-                            cmd.Parameters.Clear();
-                        }
-                        transaction.Commit();
-                    }
-                }
+                //        // 아날로그 태그 저장
+                //        for (ushort i = 0; i < 125; i++)
+                //        {
+                //            ushort reg = _0x03.ReadPoints(i, 1)[0];
+                //            cmd.CommandText =
+                //            "UPDATE AnalogTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
+                //            cmd.Parameters.AddWithValue("@addr", $"D{i}");
+                //            cmd.Parameters.AddWithValue("@val", reg);
+                //            cmd.ExecuteNonQuery();
+                //            cmd.Parameters.Clear();
+                //        }
+                //        transaction.Commit();
+                //    }
+                //}
             }
         }
     }

@@ -1,28 +1,19 @@
 using ActUtlType64Lib;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using System.Xml.Linq;
-using System.Threading;
 using System.Data.SQLite;
-using System.Text;
+
 
 
 namespace PlcModbus
 {
     public partial class Form1 : Form
     {
-        //delegate void TimerEventFiredDelegate();
-
         public int writeCommand = 0;
         bool isConnected = false;
-        static ActUtlType64 plc = new ActUtlType64();
+        static ActUtlType64 plc = new ActUtlType64();//ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½Ùºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         static PlcData _data = new PlcData(plc);
         static ModbusServer modbusServer = new ModbusServer(_data, plc);
 
-
         private CancellationTokenSource? tokenSource;
-
 
         public Form1()
         {
@@ -32,11 +23,11 @@ namespace PlcModbus
         private void button1_Click(object sender, EventArgs e)
         {
 
-            plc.ActLogicalStationNumber = 4;
+            plc.ActLogicalStationNumber = 0;
             int result = plc.Open();
             if (result == 0)
             {
-                MessageBox.Show("PLC ¿¬°á ¼º°ø", "", MessageBoxButtons.OK);
+                MessageBox.Show("PLC ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½", "", MessageBoxButtons.OK);
                 button1.BackColor = Color.AliceBlue;
 
                 modbusServer.StartModbusServer();
@@ -47,7 +38,7 @@ namespace PlcModbus
             }
             else
             {
-                MessageBox.Show($"PLC ¿¬°á ½ÇÆÐ\n ¿¡·¯ÄÚµå {result}", "", MessageBoxButtons.OK);
+                MessageBox.Show($"PLC ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ {result}", "", MessageBoxButtons.OK);
             }
         }
 
@@ -56,7 +47,7 @@ namespace PlcModbus
             int result = plc.Close();
             if (result == 0)
             {
-                MessageBox.Show("PLC ¿¬°á ÇØÁ¦", "", MessageBoxButtons.OK);
+                MessageBox.Show("PLC ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½", "", MessageBoxButtons.OK);
                 isConnected = false;
                 button1.BackColor = Color.White;
 
@@ -64,7 +55,7 @@ namespace PlcModbus
             }
             else
             {
-                MessageBox.Show($"PLC ¿¬°á ÇØÁ¦ ½ÇÆÐ\n ¿¡·¯ÄÚµå {result}", "", MessageBoxButtons.OK);
+                MessageBox.Show($"PLC ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ {result}", "", MessageBoxButtons.OK);
             }
         }
 
