@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "PlcModbus\\Form1.cs",
               "ToolTip": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\Form1.cs",
               "RelativeToolTip": "PlcModbus\\Form1.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAYwFkAAABDAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-31T16:03:19.346Z",
               "IsPinned": true,
@@ -66,7 +66,7 @@
               "RelativeDocumentMoniker": "PlcModbus\\class\\PlcData.cs",
               "ToolTip": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
               "RelativeToolTip": "PlcModbus\\class\\PlcData.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAEwFgAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAQwCAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-29T09:33:19.176Z",
               "EditorCaption": ""
@@ -79,7 +79,7 @@
               "RelativeDocumentMoniker": "PlcModbus\\class\\ModbusServer.cs",
               "ToolTip": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
               "RelativeToolTip": "PlcModbus\\class\\ModbusServer.cs",
-              "ViewState": "AgIAABIBAAAAAAAAAAAkwDcBAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAALUAAAAAAAAAAAAuwMgAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-16T03:57:05.46Z",
               "EditorCaption": ""
@@ -94,8 +94,7 @@
               "RelativeToolTip": "PlcModbus\\Form1.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T09:00:13.001Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-22T09:00:13.001Z"
             }
           ]
         }

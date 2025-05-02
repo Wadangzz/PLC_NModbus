@@ -192,7 +192,7 @@ namespace PlcModbus
 
         public void ModbusUpdate()
         {
-            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = D:\\Github\\PLC_NModbus\\PlcModbus\\plc_data.db";
 
             if (this.isConnected)
             {
@@ -280,38 +280,38 @@ namespace PlcModbus
                     writeCommand = "마스터 쓰기 요청 대기";
                 }
 
-                //using SQLiteConnection conn = new SQLiteConnection(strConn);
-                //{
-                //    conn.Open();
-                //    using (SQLiteTransaction transaction = conn.BeginTransaction())
-                //    using (SQLiteCommand cmd = new SQLiteCommand(conn))
-                //    {
-                //        // 디지털 태그 업데이트
-                //        for (ushort i = 0; i < 1024; i++)
-                //        {
-                //            bool value = _0x01.ReadPoints(i, 1)[0];
-                //            cmd.CommandText =
-                //            "UPDATE DigitalTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
-                //            cmd.Parameters.AddWithValue("@addr", $"M{i}");
-                //            cmd.Parameters.AddWithValue("@val", value ? 1 : 0);
-                //            cmd.ExecuteNonQuery();
-                //            cmd.Parameters.Clear();
-                //        }
+                using SQLiteConnection conn = new SQLiteConnection(strConn);
+                {
+                    conn.Open();
+                    using (SQLiteTransaction transaction = conn.BeginTransaction())
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        // 디지털 태그 업데이트
+                        for (ushort i = 0; i < 1024; i++)
+                        {
+                            bool value = _0x01.ReadPoints(i, 1)[0];
+                            cmd.CommandText =
+                            "UPDATE DigitalTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
+                            cmd.Parameters.AddWithValue("@addr", $"{i}");
+                            cmd.Parameters.AddWithValue("@val", value ? 1 : 0);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
 
-                //        // 아날로그 태그 저장
-                //        for (ushort i = 0; i < 125; i++)
-                //        {
-                //            ushort reg = _0x03.ReadPoints(i, 1)[0];
-                //            cmd.CommandText =
-                //            "UPDATE AnalogTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
-                //            cmd.Parameters.AddWithValue("@addr", $"D{i}");
-                //            cmd.Parameters.AddWithValue("@val", reg);
-                //            cmd.ExecuteNonQuery();
-                //            cmd.Parameters.Clear();
-                //        }
-                //        transaction.Commit();
-                //    }
-                //}
+                        // 아날로그 태그 저장
+                        for (ushort i = 0; i < 125; i++)
+                        {
+                            ushort reg = _0x03.ReadPoints(i, 1)[0];
+                            cmd.CommandText =
+                            "UPDATE AnalogTags SET value = @val, timestamp = datetime('now', '+9 hours') WHERE address = @addr";
+                            cmd.Parameters.AddWithValue("@addr", $"{i}");
+                            cmd.Parameters.AddWithValue("@val", reg);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        transaction.Commit();
+                    }
+                }
             }
         }
     }

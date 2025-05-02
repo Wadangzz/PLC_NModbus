@@ -28,15 +28,23 @@ namespace PlcModbus
         public int[] mValues = new int[64];
         public bool[] coilValues = new bool[1024];
 
-        private Dictionary<int, int> productMap = new Dictionary<int, int> {
-                                        { 1, 0 }, // A
-                                        { 2, 1 }, // B
-                                        { 4, 2 }  // C
-                                    };
-        private Dictionary<int, char> productModel = new Dictionary<int, char> {
-                                        { 1, 'A' }, // A
-                                        { 2, 'B' }, // B
-                                        { 4, 'C' }  // C
+
+        public struct Info
+        {
+            public int Index;
+            public char Model;
+
+            public Info(int index, char model)
+            {
+                Index = index;
+                Model = model;
+            }
+        }
+        private Dictionary<int, Info> productData = 
+            new Dictionary<int, Info> {
+                                        { 1, new Info(0,'A') }, // A
+                                        { 2, new Info(1,'B') }, // B
+                                        { 4, new Info(2,'C') }  // C
                                     };
 
         private string lastDate = "";   // 날짜 비교용
@@ -85,10 +93,10 @@ namespace PlcModbus
                         int product = deviceValues[5];
                         string today = DateTime.Now.ToString("yyyyMMdd");
 
-                        if (productMap.ContainsKey(product))
+                        if (productData.ContainsKey(product))
                         {
-                            int index = productMap[product];      // 0, 1, 2
-                            char model = productModel[product];  // A, B, C
+                            int index = productData[product].Index;      // 0, 1, 2
+                            char model = productData[product].Model;  // A, B, C
                             // 날짜가 바뀌었으면
                             if (today != lastDate)
                             {
@@ -104,7 +112,7 @@ namespace PlcModbus
 
                             using (MySqlCommand cmd = new MySqlCommand(
                                 @"INSERT IGNORE INTO productnum 
-                                (Product, Model, Dust, Scratch, inspection)
+                                (ProductCode, Model, Dust, Scratch, inspection)
                                 VALUES (@ProductCode, @Model, @Dust, @Scratch, @inspection)", conn))
                             {
                                 cmd.Parameters.AddWithValue("@ProductCode", productCode);

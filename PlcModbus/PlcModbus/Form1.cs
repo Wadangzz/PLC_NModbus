@@ -9,7 +9,8 @@ namespace PlcModbus
     {
         public int writeCommand = 0;
         bool isConnected = false;
-        static ActUtlType64 plc = new ActUtlType64();//���⼭ ������ �ν��Ͻ��� �ٸ� Ŭ������ ���� �����Ϸ��ٺ��� �������� ����
+        // 여기서 선언된 plc 인스턴스는 다른 클래스에서 공유될 수 있도록 static으로 선언됨
+        static ActUtlType64 plc = new ActUtlType64();
         static PlcData _data = new PlcData(plc);
         static ModbusServer modbusServer = new ModbusServer(_data, plc);
 
@@ -27,7 +28,7 @@ namespace PlcModbus
             int result = plc.Open();
             if (result == 0)
             {
-                MessageBox.Show("PLC ���� ����", "", MessageBoxButtons.OK);
+                MessageBox.Show("PLC 연결 성공", "", MessageBoxButtons.OK);
                 button1.BackColor = Color.AliceBlue;
 
                 modbusServer.StartModbusServer();
@@ -38,7 +39,7 @@ namespace PlcModbus
             }
             else
             {
-                MessageBox.Show($"PLC ���� ����\n �����ڵ� {result}", "", MessageBoxButtons.OK);
+                MessageBox.Show($"PLC 연결 실패\n 오류코드: {result}", "", MessageBoxButtons.OK);
             }
         }
 
@@ -47,7 +48,7 @@ namespace PlcModbus
             int result = plc.Close();
             if (result == 0)
             {
-                MessageBox.Show("PLC ���� ����", "", MessageBoxButtons.OK);
+                MessageBox.Show("PLC 연결 종료", "", MessageBoxButtons.OK);
                 isConnected = false;
                 button1.BackColor = Color.White;
 
@@ -55,7 +56,7 @@ namespace PlcModbus
             }
             else
             {
-                MessageBox.Show($"PLC ���� ���� ����\n �����ڵ� {result}", "", MessageBoxButtons.OK);
+                MessageBox.Show($"PLC 연결 종료 실패\n 오류코드: {result}", "", MessageBoxButtons.OK);
             }
         }
 
@@ -83,32 +84,32 @@ namespace PlcModbus
         private void button3_Click(object sender, EventArgs e)
         {
 
-            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = D:\\Github\\PLC_NModbus\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
                 conn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(conn))
                 {
                     cmd.CommandText = @"
-                CREATE TABLE IF NOT EXISTS DigitalTags (
-                    id INTEGER PRIMARY KEY,
-                    address TEXT NOT NULL,
-                    value INTEGER NOT NULL,
-                    timestamp DATETIME DEFAULT (datetime('now', '+9 hours'))
-                );
-                CREATE TABLE IF NOT EXISTS AnalogTags (
-                    id INTEGER PRIMARY KEY,
-                    address TEXT NOT NULL,
-                    value INTEGER NOT NULL,
-                    timestamp DATETIME DEFAULT (datetime('now', '+9 hours'))
-                );";
-                    cmd.ExecuteNonQuery();
+                        CREATE TABLE IF NOT EXISTS DigitalTags (
+                            id INTEGER PRIMARY KEY,
+                            address TEXT NOT NULL,
+                            value INTEGER NOT NULL,
+                            timestamp DATETIME DEFAULT (datetime('now', '+9 hours'))
+                        );
+                        CREATE TABLE IF NOT EXISTS AnalogTags (
+                            id INTEGER PRIMARY KEY,
+                            address TEXT NOT NULL,
+                            value INTEGER NOT NULL,
+                            timestamp DATETIME DEFAULT (datetime('now', '+9 hours'))
+                        );";
+                        cmd.ExecuteNonQuery();
 
                     for (int i = 0; i < 1024; i++)
                     {
                         cmd.CommandText = "INSERT OR IGNORE INTO DigitalTags (id, address, value) VALUES (@id, @addr, 0)";
                         cmd.Parameters.AddWithValue("@id", i);
-                        cmd.Parameters.AddWithValue("@addr", $"M{i}");
+                        cmd.Parameters.AddWithValue("@addr", $"{i}");
                         cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
                     }
@@ -117,7 +118,7 @@ namespace PlcModbus
                     {
                         cmd.CommandText = "INSERT OR IGNORE INTO AnalogTags (id, address, value) VALUES (@id, @addr, 0)";
                         cmd.Parameters.AddWithValue("@id", i);
-                        cmd.Parameters.AddWithValue("@addr", $"D{i}");
+                        cmd.Parameters.AddWithValue("@addr", $"{i}");
                         cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
                     }
@@ -127,7 +128,7 @@ namespace PlcModbus
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string strConn = @"Data Source = C:\\Users\\wadangzz\\Desktop\\Wadangzz\\wadangzz\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = D:\\Github\\PLC_NModbus\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
                 

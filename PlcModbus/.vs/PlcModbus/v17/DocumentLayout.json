@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Github\\PLC_NModbus\\PlcModbus\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|d:\\github\\plc_nmodbus\\plcmodbus\\plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|d:\\github\\plc_nmodbus\\plcmodbus\\plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|d:\\github\\plc_nmodbus\\plcmodbus\\plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|d:\\github\\plc_nmodbus\\plcmodbus\\plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\modbusserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|d:\\github\\plc_nmodbus\\plcmodbus\\plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|solutionrelative:plcmodbus\\class\\plcdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8BF0346B-8AC7-4862-A163-994B065B6373}|PlcModbus\\PlcModbus.csproj|d:\\github\\plc_nmodbus\\plcmodbus\\plcmodbus\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "PlcModbus\\Form1.cs",
               "ToolTip": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\Form1.cs",
               "RelativeToolTip": "PlcModbus\\Form1.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAYwFkAAABDAAAAAAAAAA==",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAGUAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-31T16:03:19.346Z",
               "IsPinned": true,
@@ -60,26 +60,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PlcData.cs",
               "DocumentMoniker": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
               "RelativeDocumentMoniker": "PlcModbus\\class\\PlcData.cs",
               "ToolTip": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\class\\PlcData.cs",
               "RelativeToolTip": "PlcModbus\\class\\PlcData.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAEwF0AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAAuwA8AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-29T09:33:19.176Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "ModbusServer.cs",
               "DocumentMoniker": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
               "RelativeDocumentMoniker": "PlcModbus\\class\\ModbusServer.cs",
               "ToolTip": "D:\\Github\\PLC_NModbus\\PlcModbus\\PlcModbus\\class\\ModbusServer.cs",
               "RelativeToolTip": "PlcModbus\\class\\ModbusServer.cs",
-              "ViewState": "AgIAABIBAAAAAAAAAAAkwDcBAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAABgBAAAAAAAAAAAAACEBAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-16T03:57:05.46Z",
               "EditorCaption": ""
@@ -94,8 +94,7 @@
               "RelativeToolTip": "PlcModbus\\Form1.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T09:00:13.001Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-22T09:00:13.001Z"
             }
           ]
         }
