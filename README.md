@@ -64,7 +64,7 @@ GitHub의 Source Code를 직접 분석하여 **Slave와 Master가 어떻게 동�
 > **문제**: 서보 모터 위치값(int), 로봇의 관절 각도(float)는 Modbus Register의 자료형(2byte ushort)과 호환되지 않음  
 > **해결방법**: Int/Float 값을 `ushort` 2개로 인코딩하여 DataStore에 저장하고,  Master 측에서 다시 디코딩하는 방식을 사용  
 >  
-> 🔄 그 결과: Unity 기반 Digital Twin에서 **서보 모터 위치 및 로봇 관절 각도를 정확히 재현**할 수 있었습니다.
+> **결과**: Unity 기반 Digital Twin에서 **서보 모터 위치 및 로봇 관절 각도를 정확히 재현**할 수 있었습니다.
 
 ---
 
