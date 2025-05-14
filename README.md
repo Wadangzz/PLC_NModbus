@@ -67,12 +67,12 @@ GitHub의 Source Code를 직접 분석하여 **Slave와 Master가 어떻게 동�
 
 **문제**  
 Mitsubishi PLC 라이브러리 `ActUtlType.dll`의 `ReadDeviceBlock` 메서드를 사용할 경우,  
-M 비트 릴레이 1024개를 읽으면 **16비트 단위로 패킹된 int 64개** 형태로 반환되어,  
-Modbus DataStore의 **bool 배열 형식과 호환되지 않는 문제**가 발생
+M 비트 릴레이 1024개를 읽으면 **16비트 단위로 패킹된 `int` 64개** 형태로 반환되어,  
+Modbus CoilInput의 **`bool` 배열 형식과 호환되지 않는 문제**가 발생
 
 **해결방법**  
-INT 단위로 패킹된 데이터를 **bit 단위로 디코딩하여 bool 배열로 변환**한 후,  
-Modbus DataStore에 **bit 단위로 매핑 저장**하는 로직을 구현
+INT 단위로 패킹된 데이터를 **`bit` 단위로 디코딩하여 `bool` 배열로 변환**한 후,  
+**`bit` 단위로 매핑 저장**하는 로직을 구현
 
 **결과**  
 PLC의 M 비트 릴레이 1024개를 **bool 형식으로 정확히 저장 및 활용**할 수 있게 되었습니다.
