@@ -1,8 +1,6 @@
 using ActUtlType64Lib;
 using System.Data.SQLite;
 
-
-
 namespace PlcModbus
 {
     public partial class Form1 : Form
@@ -24,7 +22,7 @@ namespace PlcModbus
         private void button1_Click(object sender, EventArgs e)
         {
 
-            plc.ActLogicalStationNumber = 0;
+            plc.ActLogicalStationNumber = 4;
             int result = plc.Open();
             if (result == 0)
             {
@@ -84,7 +82,8 @@ namespace PlcModbus
         private void button3_Click(object sender, EventArgs e)
         {
 
-            string strConn = @"Data Source = D:\\Github\\PLC_NModbus\\PlcModbus\\plc_data.db";
+            string strConn = @"Data Source = C:\\Users\\user\\Documents\\GitHub\\PLC_NModbus\\PlcModbus\\plc_data.db";
+            //string strConn = @"Data Source = D:\\Github\\PLC_NModbus\\PlcModbus\\plc_data.db";
             using (SQLiteConnection conn = new SQLiteConnection(strConn))
             {
                 conn.Open();
