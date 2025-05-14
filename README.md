@@ -4,7 +4,8 @@
 
 **PLC_NModbus**는 C# 기반의 Modbus TCP 통신 시스템으로, Mitsubishi PLC와   
 외부 장치(Unity, Python, HMI 등)와 실시간 데이터 연동을 목적으로 제작된 프로젝트입니다.  
-자동화 라인 구축 프로젝트에서 실제 사용된 코드이며, PLC 제어, 로봇 제어, 데이터 수집, MySQL/SQLite 연동 기능을 포함합니다.
+자동화 라인 구축 프로젝트에서 실제 사용된 코드이며, PLC 제어, 로봇 제어, 데이터 수집,    
+MySQL/SQLite 연동 기능을 포함합니다.
 
 ---
 
@@ -13,7 +14,8 @@
 처음에는 TCP 통신의 바이트 패킷을 직접 구성하여 구현하려 했으나,  
 Modbus 프로토콜에 맞춰 통신을 설계하는 데에는 시간과 리스크가 컸습니다.  
 그러던 중 구조화가 잘 되어 있는 **NModbus 오픈소스 패키지**를 발견하게 되었고,  
-GitHub의 Source Code를 직접 분석하여 **Slave와 Master가 어떻게 동작하는지** 구조를 파악하고 프로젝트에 적용하였습니다.
+GitHub의 Source Code를 직접 분석하여 **Slave와 Master가 어떻게 동작하는지**   
+구조를 파악하고 프로젝트에 적용하였습니다.
 
 ---
 
@@ -61,10 +63,34 @@ GitHub의 Source Code를 직접 분석하여 **Slave와 Master가 어떻게 동�
 
 ## 🐞 Trouble Shooting
 
-> **문제**: 서보 모터 위치값(int), 로봇의 관절 각도(float)는 Modbus Register의 자료형(2byte ushort)과 호환되지 않음  
-> **해결방법**: Int/Float 값을 `ushort` 2개로 인코딩하여 DataStore에 저장하고,  Master 측에서 다시 디코딩하는 방식을 사용  
->  
-> **결과**: Unity 기반 Digital Twin에서 **서보 모터 위치 및 로봇 관절 각도를 정확히 재현**할 수 있었습니다.
+### ⚠️ 1. PLC M 비트 릴레이 → Modbus bool 변환 문제
+
+**문제**  
+Mitsubishi PLC 라이브러리 `ActUtlType.dll`의 `ReadDeviceBlock` 메서드를 사용할 경우,  
+M 비트 릴레이 1024개를 읽으면 **16비트 단위로 패킹된 int 64개** 형태로 반환되어,  
+Modbus DataStore의 **bool 배열 형식과 호환되지 않는 문제**가 발생
+
+**해결방법**  
+INT 단위로 패킹된 데이터를 **bit 단위로 디코딩하여 bool 배열로 변환**한 후,  
+Modbus DataStore에 **bit 단위로 매핑 저장**하는 로직을 구현
+
+**결과**  
+PLC의 M 비트 릴레이 1024개를 **bool 형식으로 정확히 저장 및 활용**할 수 있게 되었습니다.
+
+---
+
+### ⚙️ 2. 서보 위치/로봇 각도 → Modbus 자료형 호환 문제
+
+**문제**  
+서보 모터 위치값(`int`)과 로봇 관절 각도 (`float`)는 Modbus Register의 자료형인  
+`ushort`과 호환되지 않음
+
+**해결방법**  
+`int` 및 `float` 값을 각각 **2개의 `ushort`로 인코딩**하여 저장하고,  
+Master 측에서는 이를 **디코딩하여 원래의 값으로 복원**하는 방식을 적용   
+
+**결과**  
+Unity 기반 Digital Twin에서 **서보 모터 위치 및 로봇 각도를 정확하게 재현**할 수 있게 되었습니다.
 
 ---
 
